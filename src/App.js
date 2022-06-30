@@ -18,36 +18,40 @@ class App extends Component {
   handleAdd = async () => {
     const obj = { title: "a", body: "b" };
     const { data: post } = await axios.post(apiEndpoint, obj);
-    
+
     const posts = [post, ...this.state.posts];
     this.setState({ posts });
-  }; 
+  };
 
-  handleUpdate =  async post => {
+  handleUpdate = async (post) => {
     post.title = "UPDATED";
     await axios.put(apiEndpoint + "/" + post.id, post);
-    
+
     const posts = [...this.state.posts];
     const index = posts.indexOf(post);
     posts[index] = { ...post };
-    this.setState({ posts});
+    this.setState({ posts });
   };
 
   handleDelete = async post => {
     const originalPosts = this.state.posts;
 
-    const posts = this.state.posts.filter(p => p.id !== post.id);
+    const posts = this.state.posts.filter((p) => p.id !== post.id);
     this.setState({ posts });
 
-    try{
-      await axios.delete(apiEndpoint + "/" + post.id);
-      throw new Error("");
+    try {
+      await axios.delete('s' + apiEndpoint + "/" + post.id);
     } catch (ex) {
-      alert("Something failed while deleting a post!")
+      if(ex.response && ex.response.status === 404)
+        alert('This post has already been deleted.')
+      else {
+        console.log('Logging the error', ex)
+        alert("An unexpected error occurred");
+
+      }
+
       this.setState({ posts: originalPosts });
     }
-
-
   };
 
   render() {
