@@ -21,7 +21,7 @@ class App extends Component {
     
     const posts = [post, ...this.state.posts];
     this.setState({ posts });
-  };
+  }; 
 
   handleUpdate = (post) => {
     console.log("Update", post);
