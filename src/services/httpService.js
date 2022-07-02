@@ -1,5 +1,5 @@
 import axios from "axios";
-import { toast } from 'react-toastify'
+import { toast } from "react-toastify";
 
 axios.interceptors.response.use(null, (error) => {
   const expectedError =
@@ -19,5 +19,5 @@ export default {
   get: axios.get,
   post: axios.post,
   put: axios.put,
-  delete: axios.delete
+  delete: axios.delete,
 };
